@@ -3,29 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Offline Lyrics Player · Demo</title>
+  <title>Spotify (Demo)</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <div class="brand"><div class="logo"></div><h1>Offline Lyrics Player</h1></div>
-    <div class="pill">Demo • No account required</div>
+    <div class="brand">
+      <img src="picture/Spotify Icon.png" alt="Spotify Logo" class="logo">
+      <h1>Spotify (Demo)</h1>
+    </div>
+    <button id="themeToggle" class="theme-btn">🌙</button>
   </header>
 
   <div class="container">
+    <!-- Main Grid -->
     <div class="grid">
 
-      <!-- LEFT: Player -->
+      <!-- LEFT: Music Player -->
       <section class="card player-card">
-        <h2>Player & Lyrics</h2>
+        <h2>Music Player & Lyrics</h2>
         <div class="body">
-          <audio id="audio" preload="metadata"></audio>
+          <audio id="audioMusic" preload="metadata"></audio>
           <div class="controls">
-            <button id="btnPrev" class="secondary">Prev</button>
-            <button id="btnPlay" class="primary">Play</button>
-            <button id="btnPause" class="secondary">Pause</button>
-            <button id="btnStop" class="secondary">Stop</button>
-            <button id="btnNext" class="secondary">Next</button>
+            <button id="btnPrev" class="secondary"><img src="icons/prev.png" alt="Prev"></button>
+            <button id="btnPlay" class="primary"><img src="icons/play.png" alt="Play"></button>
+            <button id="btnPause" class="secondary"><img src="icons/pause.png" alt="Pause"></button>
+            <button id="btnStop" class="secondary"><img src="icons/stop.png" alt="Stop"></button>
+            <button id="btnNext" class="secondary"><img src="icons/next.png" alt="Next"></button>
             <div class="spacer"></div>
             <span id="songName" class="hint">No audio loaded</span>
           </div>
@@ -42,13 +46,12 @@
 
       <!-- RIGHT: Import + Playlist -->
       <div class="right-col">
-
         <!-- Import & Export -->
         <aside class="card">
           <h2>Import & Export</h2>
           <div class="body">
             <label class="select">
-              <input id="folderInput" type="file" webkitdirectory multiple hidden />Choose Folder
+              <input id="folderInput" type="file" webkitdirectory multiple hidden />Choose Music Folder
             </label>
             <div style="height:12px"></div>
             <button id="btnExportLrc" disabled>Export LRC</button>
@@ -59,13 +62,43 @@
         <aside class="card">
           <h2>Playlist</h2>
           <div class="body">
-            <input id="searchBox" type="text" placeholder="Search (e.g. hello, artist:adele)" class="search-box">
+            <input id="searchBox" type="text" placeholder="Search here..." class="search-box">
             <ul id="playlist" class="playlist"></ul>
           </div>
         </aside>
-
       </div>
     </div>
+
+    <!-- Podcast Section -->
+    <section class="card podcast-card">
+      <h2>Podcast / Audiobook</h2>
+      <div class="body podcast-panel">
+        <!-- Podcast Controls -->
+        <audio id="audioPodcast" preload="metadata"></audio>
+        <div class="controls">
+          <button id="btnPodcastPrev" class="secondary"><img src="icons/prev.png" alt="Prev"></button>
+          <button id="btnPodcastPlay" class="primary"><img src="icons/play.png" alt="Play"></button>
+          <button id="btnPodcastPause" class="secondary"><img src="icons/pause.png" alt="Pause"></button>
+          <button id="btnPodcastStop" class="secondary"><img src="icons/stop.png" alt="Stop"></button>
+          <button id="btnPodcastNext" class="secondary"><img src="icons/next.png" alt="Next"></button>
+          <div class="spacer"></div>
+          <span id="podcastName" class="hint">No podcast loaded</span>
+        </div>
+
+        <!-- Podcast Timebar -->
+        <div class="timebar">
+          <span id="podCur" class="timetext">0:00</span>
+          <input id="podSeek" type="range" min="0" max="100" value="0" step="0.1" />
+          <span id="podDur" class="timetext">0:00</span>
+        </div>
+
+        <!-- Podcast Folder + List -->
+        <label class="select" style="margin-top:12px;">
+          <input id="podcastFolder" type="file" webkitdirectory multiple hidden />Choose Podcast Folder
+        </label>
+        <ul id="podcastList" class="playlist podcast-scroll"></ul>
+      </div>
+    </section>
   </div>
 
   <script src="script.js"></script>
