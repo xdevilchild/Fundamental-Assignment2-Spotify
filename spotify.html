@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Offline Lyrics Player · Demo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="brand"><div class="logo"></div><h1>Offline Lyrics Player</h1></div>
+    <div class="pill">Demo • No account required</div>
+  </header>
+
+  <div class="container">
+    <div class="grid">
+
+      <!-- LEFT: Player -->
+      <section class="card player-card">
+        <h2>Player & Lyrics</h2>
+        <div class="body">
+          <audio id="audio" preload="metadata"></audio>
+          <div class="controls">
+            <button id="btnPrev" class="secondary">Prev</button>
+            <button id="btnPlay" class="primary">Play</button>
+            <button id="btnPause" class="secondary">Pause</button>
+            <button id="btnStop" class="secondary">Stop</button>
+            <button id="btnNext" class="secondary">Next</button>
+            <div class="spacer"></div>
+            <span id="songName" class="hint">No audio loaded</span>
+          </div>
+
+          <div class="timebar">
+            <span id="cur" class="timetext">0:00</span>
+            <input id="seek" type="range" min="0" max="100" value="0" step="0.1" />
+            <span id="dur" class="timetext">0:00</span>
+          </div>
+
+          <div id="lyrics" class="lyrics" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <!-- RIGHT: Import + Playlist -->
+      <div class="right-col">
+
+        <!-- Import & Export -->
+        <aside class="card">
+          <h2>Import & Export</h2>
+          <div class="body">
+            <label class="select">
+              <input id="folderInput" type="file" webkitdirectory multiple hidden />Choose Folder
+            </label>
+            <div style="height:12px"></div>
+            <button id="btnExportLrc" disabled>Export LRC</button>
+          </div>
+        </aside>
+
+        <!-- Playlist -->
+        <aside class="card">
+          <h2>Playlist</h2>
+          <div class="body">
+            <input id="searchBox" type="text" placeholder="Search (e.g. hello, artist:adele)" class="search-box">
+            <ul id="playlist" class="playlist"></ul>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
