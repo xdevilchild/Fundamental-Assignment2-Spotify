@@ -3,230 +3,104 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Spotify Demo Player</title>
-  <style>
-    body {margin:0;font-family:Arial,sans-serif;background:#121212;color:#fff;}
-    header {background:#1db954;padding:16px;font-size:20px;font-weight:bold;}
-    .container {display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:20px;}
-    .card {background:#181818;padding:16px;border-radius:10px;}
-    .controls {display:flex;gap:10px;margin-bottom:10px;}
-    button {padding:8px 14px;border:none;border-radius:20px;cursor:pointer;font-weight:600;}
-    button.play {background:#1db954;color:#fff;}
-    button.secondary {background:#333;color:#fff;}
-    input[type="range"] {width:100%;}
-    .lyrics {height:280px;overflow-y:auto;background:#101010;padding:12px;border-radius:8px;margin-top:10px;}
-    .line {padding:6px;opacity:.6;cursor:pointer;}
-    .line.active {background:rgba(29,185,84,0.2);opacity:1;border-radius:6px;}
-    .filters {margin:10px 0;}
-    .filters button {background:#1db954;margin:4px;}
-    .searchbar input {width:100%;padding:8px;border-radius:20px;border:none;}
-    .songlist div {padding:8px;cursor:pointer;border-radius:6px;}
-    .songlist div:hover {background:#282828;}
-    .stamp {font-size:11px;color:#aaa;margin-right:6px;}
-  </style>
+  <title>Spotify (Demo)</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>Spotify Demo Player</header>
-  <div class="container">
-    <section class="card">
-      <h2>Player</h2>
-      <audio id="audio" preload="metadata"></audio>
-      <div class="controls">
-        <button id="btnPlay" class="play">Play</button>
-        <button id="btnPause" class="secondary">Pause</button>
-        <button id="btnStop" class="secondary">Stop</button>
-        <span id="songName">No song loaded</span>
-      </div>
-      <input id="seek" type="range" min="0" max="100" value="0" step="0.1" />
-      <div id="time">0:00 / 0:00</div>
-      <div id="lyrics" class="lyrics"></div>
-    </section>
+  <header>
+    <div class="brand">
+      <img src="picture/Spotify Icon.png" alt="Spotify Logo" class="logo">
+      <h1>Spotify (Demo)</h1>
+    </div>
+    <button id="themeToggle" class="theme-btn">🌙</button>
+  </header>
 
-    <aside class="card">
-      <h2>Smart Search</h2>
-      <div class="filters">
-        <button onclick="filterBy('Japanese')">Japanese</button>
-        <button onclick="filterBy('English')">English</button>
-        <button onclick="filterBy('Chinese')">Chinese</button>
-        <button onclick="filterBy('Pop')">Pop</button>
-        <button onclick="filterBy('Anime')">Anime</button>
-        <button onclick="filterBy('Mandopop')">Mandopop</button>
-        <button onclick="renderSongList()">All</button>
+  <div class="container">
+    <!-- Main Grid -->
+    <div class="grid">
+
+      <!-- LEFT: Music Player -->
+      <section class="card player-card">
+        <h2>Music Player & Lyrics</h2>
+        <div class="body">
+          <audio id="audioMusic" preload="metadata"></audio>
+          <div class="controls">
+            <button id="btnPrev" class="secondary"><img src="icons/prev.png" alt="Prev"></button>
+            <button id="btnPlay" class="primary"><img src="icons/play.png" alt="Play"></button>
+            <button id="btnPause" class="secondary"><img src="icons/pause.png" alt="Pause"></button>
+            <button id="btnStop" class="secondary"><img src="icons/stop.png" alt="Stop"></button>
+            <button id="btnNext" class="secondary"><img src="icons/next.png" alt="Next"></button>
+            <div class="spacer"></div>
+            <span id="songName" class="hint">No audio loaded</span>
+          </div>
+
+          <div class="timebar">
+            <span id="cur" class="timetext">0:00</span>
+            <input id="seek" type="range" min="0" max="100" value="0" step="0.1" />
+            <span id="dur" class="timetext">0:00</span>
+          </div>
+
+          <div id="lyrics" class="lyrics" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <!-- RIGHT: Import + Playlist -->
+      <div class="right-col">
+        <!-- Import & Export -->
+        <aside class="card">
+          <h2>Import & Export</h2>
+          <div class="body">
+            <label class="select">
+              <input id="folderInput" type="file" webkitdirectory multiple hidden />Choose Music Folder
+            </label>
+            <div style="height:12px"></div>
+            <button id="btnExportLrc" disabled>Export LRC</button>
+          </div>
+        </aside>
+
+        <!-- Playlist -->
+        <aside class="card">
+          <h2>Playlist</h2>
+          <div class="body">
+            <input id="searchBox" type="text" placeholder="Search here..." class="search-box">
+            <ul id="playlist" class="playlist"></ul>
+          </div>
+        </aside>
       </div>
-      <div class="searchbar">
-        <input id="search" type="text" placeholder="Search by title, artist, language, genre..." />
+    </div>
+
+    <!-- Podcast Section -->
+    <section class="card podcast-card">
+      <h2>Podcast / Audiobook</h2>
+      <div class="body podcast-panel">
+        <!-- Podcast Controls -->
+        <audio id="audioPodcast" preload="metadata"></audio>
+        <div class="controls">
+          <button id="btnPodcastPrev" class="secondary"><img src="icons/prev.png" alt="Prev"></button>
+          <button id="btnPodcastPlay" class="primary"><img src="icons/play.png" alt="Play"></button>
+          <button id="btnPodcastPause" class="secondary"><img src="icons/pause.png" alt="Pause"></button>
+          <button id="btnPodcastStop" class="secondary"><img src="icons/stop.png" alt="Stop"></button>
+          <button id="btnPodcastNext" class="secondary"><img src="icons/next.png" alt="Next"></button>
+          <div class="spacer"></div>
+          <span id="podcastName" class="hint">No podcast loaded</span>
+        </div>
+
+        <!-- Podcast Timebar -->
+        <div class="timebar">
+          <span id="podCur" class="timetext">0:00</span>
+          <input id="podSeek" type="range" min="0" max="100" value="0" step="0.1" />
+          <span id="podDur" class="timetext">0:00</span>
+        </div>
+
+        <!-- Podcast Folder + List -->
+        <label class="select" style="margin-top:12px;">
+          <input id="podcastFolder" type="file" webkitdirectory multiple hidden />Choose Podcast Folder
+        </label>
+        <ul id="podcastList" class="playlist podcast-scroll"></ul>
       </div>
-      <div class="songlist" id="songlist"></div>
-    </aside>
+    </section>
   </div>
 
-<script>
-const songs = [
-  {
-    title: "Kaiju No Hanauta",
-    file: "songs/KaijuNoHanauta.mp3",
-    lrc: "lyrics/KaijuNoHanauta.lrc",
-    lyrics: `[00:03.00] Kaiju no Hanauta starts here
-[00:10.00] Second line example
-[00:20.00] More lyrics go here`,
-    language: "Japanese",
-    artist: "Eve",
-    genre: "Anime"
-  },
-  {
-    title: "You're Beautiful",
-    file: "songs/YoureBeautiful.mp3",
-    lrc: "lyrics/YoureBeautiful.lrc",
-    lyrics: `[00:05.00] My life is brilliant
-[00:12.00] My love is pure
-[00:20.00] You're beautiful...`,
-    language: "English",
-    artist: "James Blunt",
-    genre: "Pop"
-  },
-  {
-    title: "More Difficult Than It Seems",
-    file: "songs/MoreDifficultThanItSeems.mp3",
-    lrc: "lyrics/MoreDifficultThanItSeems.lrc",
-    lyrics: `[00:02.00] Chinese intro lyric line
-[00:08.00] Chorus line here
-[00:15.00] More Difficult Than It Seems...`,
-    language: "Chinese",
-    artist: "Jay Chou",
-    genre: "Mandopop"
-  }
-];
-
-
-
-const audio = document.getElementById('audio');
-const btnPlay = document.getElementById('btnPlay');
-const btnPause = document.getElementById('btnPause');
-const btnStop = document.getElementById('btnStop');
-const songName = document.getElementById('songName');
-const seek = document.getElementById('seek');
-const time = document.getElementById('time');
-const lyricsEl = document.getElementById('lyrics');
-const search = document.getElementById('search');
-const songlist = document.getElementById('songlist');
-
-let currentSong = null;
-let entries = [];
-let activeIndex = -1;
-
-const fmt = t => { if(!isFinite(t)||t<0) t=0; const m=Math.floor(t/60),s=Math.floor(t%60); return `${m}:${s.toString().padStart(2,'0')}`; };
-
-function parseLRC(text){
-  const lines = text.split(/\\r?\\n/);
-  const out=[];
-  for(const raw of lines){
-    const tagRe=/\\[(\\d{1,2}):(\\d{2})(?:\\.(\\d{1,3}))?\\]/g;
-    let match; let textline = raw.replace(tagRe,'').trim();
-    if(!raw.match(tagRe)) continue;
-    tagRe.lastIndex=0;
-    while((match=tagRe.exec(raw))){
-      const min=parseInt(match[1]), sec=parseInt(match[2]);
-      const ms=match[3]?parseInt(match[3].padEnd(3,'0')):0;
-      const t=min*60+sec+ms/1000;
-      out.push({time:t,text:textline});
-    }
-  }
-  return out.sort((a,b)=>a.time-b.time);
-}
-
-function renderLyrics(){
-  lyricsEl.innerHTML='';
-  entries.forEach((e,i)=>{
-    const div=document.createElement('div');
-    div.className='line';
-    div.dataset.index=i;
-    div.innerHTML=`<span class="stamp">[${fmt(e.time)}]</span> ${e.text}`;
-    div.addEventListener('click',()=>{audio.currentTime=e.time;});
-    lyricsEl.appendChild(div);
-  });
-  activeIndex=-1;
-}
-
-function updateActive(time){
-  if(entries.length===0) return;
-  let i=activeIndex;
-  if(i<0||i>=entries.length||time<entries[i].time||(i+1<entries.length&&time>=entries[i+1].time)){
-    let lo=0,hi=entries.length-1,ans=0;
-    while(lo<=hi){
-      const mid=(lo+hi>>1);
-      if(entries[mid].time<=time){ans=mid;lo=mid+1;} else hi=mid-1;
-    }
-    i=ans;
-  }
-  if(i!==activeIndex){
-    const prev=lyricsEl.querySelector('.line.active');
-    if(prev) prev.classList.remove('active');
-    const next=lyricsEl.querySelector(`.line[data-index="${i}"]`);
-    if(next){next.classList.add('active');next.scrollIntoView({block:'center'});}
-    activeIndex=i;
-  }
-}
-
-async function loadSong(song){
-  currentSong = song;
-
-  // Fix special characters in file path by encoding it
-  audio.src = encodeURI(song.file);
-  audio.load(); // reload the audio
-  songName.textContent = song.title;
-
-  // Auto-play after loading
-  audio.play().catch(err => {
-    console.warn("Autoplay blocked, press Play button:", err);
-  });
-
-  try {
-    // Try external LRC file first
-    const res = await fetch(song.lrc);
-    if (!res.ok) throw new Error("LRC not found");
-    const text = await res.text();
-    entries = parseLRC(text);
-    renderLyrics();
-  } catch (err) {
-    // Fall back to bundled lyrics if no file
-    console.warn(`Using fallback lyrics for ${song.title}`);
-    entries = parseLRC(song.lyrics);
-    renderLyrics();
-  }
-}
-
-
-
-btnPlay.addEventListener('click',()=>audio.play());
-btnPause.addEventListener('click',()=>audio.pause());
-btnStop.addEventListener('click',()=>{audio.pause();audio.currentTime=0;});
-
-audio.addEventListener('timeupdate',()=>{
-  time.textContent=`${fmt(audio.currentTime)} / ${fmt(audio.duration||0)}`;
-  if(audio.duration) seek.value=(audio.currentTime/audio.duration)*100;
-  updateActive(audio.currentTime);
-});
-seek.addEventListener('input',()=>{if(audio.duration) audio.currentTime=(seek.value/100)*audio.duration;});
-
-function renderSongList(filter=""){
-  songlist.innerHTML="";
-  const f=filter.toLowerCase();
-  songs.filter(s=>
-    s.title.toLowerCase().includes(f)||
-    s.language.toLowerCase().includes(f)||
-    s.artist.toLowerCase().includes(f)||
-    s.genre.toLowerCase().includes(f)
-  ).forEach(s=>{
-    const div=document.createElement('div');
-    div.textContent=`${s.title} (${s.language}, ${s.genre})`;
-    div.addEventListener('click',()=>loadSong(s));
-    songlist.appendChild(div);
-  });
-}
-function filterBy(value){ renderSongList(value); }
-search.addEventListener('input',()=>renderSongList(search.value));
-
-renderSongList();
-</script>
+  <script src="script.js"></script>
 </body>
 </html>
