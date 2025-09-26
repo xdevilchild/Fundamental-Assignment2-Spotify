@@ -44,8 +44,8 @@
         </div>
       </section>
 
-      <!-- RIGHT: Import + Playlist -->
-      <div class="right-col">
+      <!-- MIDDLE: Import + Playlist -->
+      <div class="middle-col">
         <!-- Import & Export -->
         <aside class="card">
           <h2>Import & Export</h2>
@@ -67,38 +67,35 @@
           </div>
         </aside>
       </div>
+
+      <!-- RIGHT: Podcast -->
+      <section class="card podcast-card">
+        <h2>Podcast / Audiobook</h2>
+        <div class="body podcast-panel">
+          <audio id="audioPodcast" preload="metadata"></audio>
+          <div class="controls">
+            <button id="btnPodcastPrev" class="secondary"><img src="icons/prev.png" alt="Prev"></button>
+            <button id="btnPodcastPlay" class="primary"><img src="icons/play.png" alt="Play"></button>
+            <button id="btnPodcastPause" class="secondary"><img src="icons/pause.png" alt="Pause"></button>
+            <button id="btnPodcastStop" class="secondary"><img src="icons/stop.png" alt="Stop"></button>
+            <button id="btnPodcastNext" class="secondary"><img src="icons/next.png" alt="Next"></button>
+            <div class="spacer"></div>
+            <span id="podcastName" class="hint">No podcast loaded</span>
+          </div>
+
+          <div class="timebar">
+            <span id="podCur" class="timetext">0:00</span>
+            <input id="podSeek" type="range" min="0" max="100" value="0" step="0.1" />
+            <span id="podDur" class="timetext">0:00</span>
+          </div>
+
+          <label class="select" style="margin-top:12px;">
+            <input id="podcastFolder" type="file" webkitdirectory multiple hidden />Choose Podcast Folder
+          </label>
+          <ul id="podcastList" class="playlist podcast-scroll"></ul>
+        </div>
+      </section>
     </div>
-
-    <!-- Podcast Section -->
-    <section class="card podcast-card">
-      <h2>Podcast / Audiobook</h2>
-      <div class="body podcast-panel">
-        <!-- Podcast Controls -->
-        <audio id="audioPodcast" preload="metadata"></audio>
-        <div class="controls">
-          <button id="btnPodcastPrev" class="secondary"><img src="icons/prev.png" alt="Prev"></button>
-          <button id="btnPodcastPlay" class="primary"><img src="icons/play.png" alt="Play"></button>
-          <button id="btnPodcastPause" class="secondary"><img src="icons/pause.png" alt="Pause"></button>
-          <button id="btnPodcastStop" class="secondary"><img src="icons/stop.png" alt="Stop"></button>
-          <button id="btnPodcastNext" class="secondary"><img src="icons/next.png" alt="Next"></button>
-          <div class="spacer"></div>
-          <span id="podcastName" class="hint">No podcast loaded</span>
-        </div>
-
-        <!-- Podcast Timebar -->
-        <div class="timebar">
-          <span id="podCur" class="timetext">0:00</span>
-          <input id="podSeek" type="range" min="0" max="100" value="0" step="0.1" />
-          <span id="podDur" class="timetext">0:00</span>
-        </div>
-
-        <!-- Podcast Folder + List -->
-        <label class="select" style="margin-top:12px;">
-          <input id="podcastFolder" type="file" webkitdirectory multiple hidden />Choose Podcast Folder
-        </label>
-        <ul id="podcastList" class="playlist podcast-scroll"></ul>
-      </div>
-    </section>
   </div>
 
   <script src="script.js"></script>
