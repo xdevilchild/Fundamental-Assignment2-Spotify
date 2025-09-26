@@ -74,14 +74,14 @@ h1 {
 /* Layout */
 .grid {
   display: grid;
-  grid-template-columns: 1.1fr 1fr 1.5fr; /* equal columns */
+  grid-template-columns: 1fr 0.8fr 1.7fr; /* equal columns */
   gap: 18px;
 }
 .middle-col {
   display:grid;
   grid-template-rows:auto 1fr;
   gap:18px;
-  height:87vh;
+  height:83vh;
 }
 
 .card {
@@ -109,7 +109,7 @@ h1 {
 
 /* Music Player */
 .player-card {
-  height: 87vh;
+  height: 83vh;
   display: flex;
   flex-direction: column;
 }
@@ -260,7 +260,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 /* Podcast Section */
 .podcast-card {
-  height: 87vh;
+  height: 83vh;
   display: flex;
   flex-direction: column;
 }
